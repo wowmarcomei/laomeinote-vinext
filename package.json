@@ -10,7 +10,8 @@
     "deploy": "npm run build && vinext-cloudflare deploy --skip-build",
     "predev": "tsx scripts/generate-data.ts",
     "prebuild": "tsx scripts/generate-data.ts",
-    "postbuild": "tsx scripts/fix-paths.ts"
+    "postbuild": "tsx scripts/fix-paths.ts",
+    "new:post": "tsx scripts/new-post.ts"
   },
   "overrides": {
     "@cloudflare/workers-response-store": "1.1.3"
