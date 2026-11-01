@@ -1,0 +1,44 @@
+/* ===== PR2: markdown tables & code blocks ===== */
+
+/*
+ * 手机上宽表格、长代码块在内容宽度内横向滚动，页面本身不横向滚动。
+ * 只在主题已有的 <=769px 断点内收紧列宽，1280 桌面保持原样。
+ * <=600px 再隐藏行号列，并把代码字号调到 14px。
+ */
+@media only screen and (max-width: 769px) {
+  .single__main,
+  .single,
+  .single__contents {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .single__contents .table-wrap {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .single__contents .highlight,
+  .single__contents .highlight > .chroma,
+  .single__contents .highlight .lntable {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .single__contents .highlight {
+    overflow-x: auto;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .single__contents .highlight .lntable td.lntd:first-child {
+    display: none;
+  }
+
+  .single__contents .highlight pre,
+  .single__contents .highlight code {
+    font-size: 14px;
+  }
+}

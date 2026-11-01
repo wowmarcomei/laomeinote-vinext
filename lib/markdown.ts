@@ -155,6 +155,12 @@ export function renderMarkdown(source: string): RenderedMarkdown {
     return renderCodeBlock(token.content, lang);
   };
 
+  // 宽表格包进可横向滚动的容器，避免文章页在手机上被表格撑出横向滚动
+  md.renderer.rules.table_open = (tokens, idx, options, _env, self) =>
+    `<div class="table-wrap">${self.renderToken(tokens, idx, options)}`;
+  md.renderer.rules.table_close = (tokens, idx, options, _env, self) =>
+    `${self.renderToken(tokens, idx, options)}</div>`;
+
   return { html: md.render(source), toc };
 }
 
