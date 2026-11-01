@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (npm ci + npm run build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      # vinext / wrangler 需要 Node >= 22（Node 20 下 node:fs/promises 没有 glob，vite build 直接失败）
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # prebuild(generate-data) -> vite build -> postbuild(fix-paths)；只构建，不部署，不需要任何密钥
+      - name: Build
+        run: npm run build
+
+      - name: Check build output
+        run: |
+          test -d dist && find dist -maxdepth 2 | head -20
+          du -sh dist
