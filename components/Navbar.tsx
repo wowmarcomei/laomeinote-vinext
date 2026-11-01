@@ -165,11 +165,7 @@ export default function Navbar() {
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
-      <div
-        className="navbarm__collapse"
-        data-open={mobileMenuOpen}
-        style={mobileMenuOpen ? { maxHeight: "100%" } : { maxHeight: 0 }}
-      >
+      <div className="navbarm__collapse" data-open={mobileMenuOpen ? "true" : "false"}>
         <ul dir="ltr">
           {MENU.map((m) => (
             <li className="navbarm__menu--item " key={m.url}>

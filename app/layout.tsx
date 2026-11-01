@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { ASSET_VERSION } from "../lib/assetVersion";
 import { site } from "../lib/site";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="stylesheet" href="/css/main.min.css" />
         <link rel="stylesheet" href="/css/font.min.css" />
         <link rel="stylesheet" href="/css/custom.min.css" />
+        <link rel="stylesheet" href={`/css/overrides.css?v=${ASSET_VERSION}`} />
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
         {FAVICONS.map((s) => (
           <link key={s} rel="apple-touch-icon" sizes={`${s}x${s}`} href={`/favicon/apple-icon-${s}x${s}.png`} />

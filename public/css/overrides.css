@@ -1,0 +1,147 @@
+/*
+ * Readable layout overrides. Loaded after custom.min.css.
+ * Do not edit public/css/main.min.css (compiled zzo theme, no source).
+ *
+ * Allowed breakpoints (do not introduce others):
+ *   <=600   phone — none in this change
+ *   <=769   matches the theme's mobile breakpoint
+ *   <=1024  tablet
+ *
+ * Sections:
+ *   1. Navbar
+ *   2. List pages (home / tag / category / gallery index)
+ *   3. Article layout and TOC
+ *   4. Post body
+ *   5. Tables and code blocks — reserved; append .table-wrap / .highlight / .lntable here
+ */
+
+/* ========== 1. Navbar ========== */
+
+/*
+ * .navbarm__collapse is position:absolute inside a 50px navbar and the theme
+ * sets max-height:0; overflow:hidden. An inline max-height:100% resolves
+ * against that 50px and clips every item after the first. Open state is
+ * [data-open="true"] (set by components/Navbar.tsx).
+ */
+.navbarm__collapse[data-open="true"] {
+  max-height: calc(100dvh - 50px);
+  overflow-y: auto;
+  z-index: 20;
+}
+
+/* ========== 2. List pages ========== */
+
+/*
+ * .inner[data-sidebar-position=right] is `1fr 1fr 266px` at every width.
+ * .list__main.lm spans the two 1fr tracks and aside.list__sidebar.r sits in
+ * the 266px track, so on a phone the cards collapse to a few dozen pixels.
+ * Stack to one column; sidebar follows the list.
+ */
+@media (max-width: 769px) {
+  .inner[data-sidebar-position="left"],
+  .inner[data-sidebar-position="right"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .inner[data-sidebar-position] > .list__main {
+    grid-area: 1 / 1 / 2 / 2;
+    min-width: 0;
+  }
+
+  .inner[data-sidebar-position] > .list__sidebar {
+    grid-area: 2 / 1 / 3 / 2;
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* width:100% on the text column plus the thumbnail overflows the row */
+  .summary-classic__flex-box {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .summary-classic__content {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+}
+
+/* ========== 3. Article layout and TOC ========== */
+
+/*
+ * .wrapper stays two columns down through 769px
+ * (minmax(0,5fr) minmax(0,2fr)), and .toc is position:fixed; width:100%;
+ * max-width:250px, so it paints past the viewport from the sidebar's static
+ * position. From tablet down: one column, TOC column removed, and .toc
+ * itself cannot grow past its container.
+ */
+@media (max-width: 1024px) {
+  .wrapper {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wrapper > .navbar,
+  .wrapper > .header,
+  .wrapper > .main,
+  .wrapper > .footer,
+  .wrapper > .main-main,
+  .wrapper > .single__main {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  aside.single__side {
+    display: none;
+  }
+
+  .toc {
+    position: static;
+    top: auto;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .single__main,
+  .single,
+  .single__contents {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /*
+   * Bare markdown <table> elements are not .table-wrap / .highlight / .lntable
+   * (those stay in section 5). Keep each table inside the column and let it
+   * scroll, without restyling the cells.
+   */
+  .single__contents > table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+/* ========== 4. Post body ========== */
+
+/* Long URLs: anywhere also shrinks min-content, unlike break-word alone. */
+.single__contents {
+  overflow-wrap: anywhere;
+}
+
+/* Keep tables and preformatted code on their own overflow, not per-character wraps. */
+.single__contents table,
+.single__contents table *,
+.single__contents pre,
+.single__contents pre *,
+.single__contents .highlight,
+.single__contents .highlight * {
+  overflow-wrap: normal;
+}
+
+/* ========== 5. Tables and code blocks ==========
+   Reserved for a follow-up.
+   Append rules for .table-wrap, .highlight, and .lntable below this line.
+*/
