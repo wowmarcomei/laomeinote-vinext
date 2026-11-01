@@ -1,35 +1,89 @@
 /* ===== PR2: markdown tables & code blocks ===== */
 
 /*
- * 手机上宽表格、长代码块在内容宽度内横向滚动，页面本身不横向滚动。
- * 只在主题已有的 <=769px 断点内收紧列宽，1280 桌面保持原样。
- * <=600px 再隐藏行号列，并把代码字号调到 14px。
+ * 宽表格在任意宽度都在内容列内横向滚动（含 769–1024），不撑出页面。
+ * tabindex=0 配合 :focus-visible，满足 axe scrollable-region-focusable。
  */
-@media only screen and (max-width: 769px) {
-  .single__main,
-  .single,
-  .single__contents {
-    min-width: 0;
-    max-width: 100%;
-  }
+.single__contents .table-wrap {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
-  .single__contents .table-wrap {
-    display: block;
-    max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+.single__contents .table-wrap:focus-visible {
+  outline: 2px solid #8aa2d3;
+  outline-offset: 2px;
+}
 
-  .single__contents .highlight,
-  .single__contents .highlight > .chroma,
-  .single__contents .highlight .lntable {
-    max-width: 100%;
-    min-width: 0;
-  }
+/*
+ * 长代码的横向滚动条在 .highlight 上。
+ * .chroma / .lntable / pre 改为可见溢出，避免内层把滚动条裁掉或自己滚动。
+ * 背景、圆角、阴影放到 .highlight，滚动时框保持不动；语言标签相对 .highlight 定位。
+ */
+.single__main,
+.single,
+.single__contents,
+.single__contents .highlight {
+  min-width: 0;
+  max-width: 100%;
+}
 
-  .single__contents .highlight {
-    overflow-x: auto;
-  }
+.single__contents .highlight {
+  overflow-x: auto;
+  margin: 1em 0;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+}
+
+.theme__dark .single__contents .highlight {
+  color: #eee;
+  background: #171f2e;
+}
+
+.theme__light .single__contents .highlight {
+  color: #344952;
+  background: #eceff1;
+}
+
+.theme__hacker .single__contents .highlight {
+  color: #d1d1d1;
+  background: #282a36;
+}
+
+.theme__solarized .single__contents .highlight {
+  color: #344952;
+  background: #f9fbe7;
+}
+
+.theme__kimbie .single__contents .highlight {
+  color: #d3af86;
+  background: #362712;
+}
+
+.single__contents .highlight > .chroma {
+  overflow: visible;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  margin: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  position: static;
+}
+
+.single__contents .highlight .lntable,
+.single__contents .highlight > .chroma table.lntable,
+.single__contents .highlight pre {
+  overflow: visible;
+  max-width: none;
+}
+
+.single__contents .highlight .lntable,
+.single__contents .highlight > .chroma table.lntable {
+  width: max-content;
+  min-width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
