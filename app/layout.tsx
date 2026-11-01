@@ -29,6 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="stylesheet" href="/css/main.min.css" />
         <link rel="stylesheet" href="/css/font.min.css" />
         <link rel="stylesheet" href="/css/custom.min.css" />
+        <link rel="stylesheet" href="/css/overrides.css" />
         <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
         {FAVICONS.map((s) => (
           <link key={s} rel="apple-touch-icon" sizes={`${s}x${s}`} href={`/favicon/apple-icon-${s}x${s}.png`} />
