@@ -4,6 +4,13 @@ dist/
 .dev.vars
 *.log
 .next/
+
+# vinext 构建/开发缓存。`.vinext/cache/.rscinfo` 含自动生成的 Server Actions 加密密钥，不要入库。
+.vinext/
+
+# 本地环境变量。示例文件允许入库。
+.env*
+!.env.example
 public/index.json
 public/index.xml
 public/sitemap.xml

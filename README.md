@@ -14,6 +14,8 @@
 
 ## 开发
 
+需要 **Node.js 22 或更高版本**（见 `package.json` 的 `engines` 与 `.nvmrc`）。Node 20 下 `vite build` 会失败：`node:fs/promises` 没有 `glob`。vinext 与 wrangler 的 `engines` 同样要求 Node ≥ 22。
+
 ```bash
 npm install
 npm run dev        # 本地开发（Vite HMR）
@@ -60,6 +62,8 @@ keywords: docker,容器      # SEO
 还原中文路径。新增/修改文章后无需手动维护任何索引。
 
 ## 部署到 Cloudflare Workers
+
+本地构建和部署都需要 **Node.js ≥ 22**。Node 20 下 `npm run build` / `npm run deploy` 里的 `vite build` 会因为 `node:fs/promises` 缺少 `glob` 直接失败。仓库已用 `.nvmrc`（`22`）和 `package.json` 的 `"engines": { "node": ">=22" }` 标明；CI（`.github/workflows/build.yml`）同样使用 Node 22，且只构建、不部署。
 
 ```bash
 export CLOUDFLARE_API_TOKEN=<your-token>
