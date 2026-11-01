@@ -1,7 +1,6 @@
 import Shell from "../../../components/Shell";
 import SinglePost from "../../../components/SinglePost";
 import { getAllPosts, getPost } from "../../../lib/content";
-import { absoluteUrl, site } from "../../../lib/site";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -16,11 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: post.title,
     description: post.description || post.excerpt,
-    alternates: { canonical: absoluteUrl(post.url) },
+    alternates: { canonical: post.url },
     openGraph: {
       title: post.title,
       description: post.description || post.excerpt,
-      url: absoluteUrl(post.url),
+      url: post.url,
       images: post.image ? [post.image] : undefined,
       type: "article",
     },

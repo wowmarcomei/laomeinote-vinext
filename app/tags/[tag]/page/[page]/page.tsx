@@ -2,6 +2,7 @@ import Shell from "../../../../../components/Shell";
 import ListPage from "../../../../../components/ListPage";
 import { listProps, totalPages } from "../../../../../lib/list";
 import { getPostsByTerm, getTerms } from "../../../../../lib/content";
+import { withCanonical } from "../../../../../lib/seo";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
@@ -9,6 +10,12 @@ export function generateStaticParams() {
     const total = totalPages(getPostsByTerm("tags", t.slug));
     return Array.from({ length: total - 1 }, (_, i) => ({ tag: t.slug, page: String(i + 2) }));
   });
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ tag: string; page: string }> }) {
+  const { tag: rawTag, page } = await params;
+  const tag = decodeURIComponent(rawTag);
+  return withCanonical(`/tags/${tag}/page/${page}/`);
 }
 
 export default async function PaginatedTag({ params }: { params: Promise<{ tag: string; page: string }> }) {

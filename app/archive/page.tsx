@@ -1,7 +1,8 @@
 import Shell from "../../components/Shell";
 import { getAllPosts } from "../../lib/content";
+import { withCanonical } from "../../lib/seo";
 
-export const metadata = { title: "时光机" };
+export const metadata = withCanonical("/archive/", { title: "时光机" });
 
 export default function ArchivePage() {
   const posts = getAllPosts();

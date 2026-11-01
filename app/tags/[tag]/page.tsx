@@ -2,6 +2,7 @@ import Shell from "../../../components/Shell";
 import ListPage from "../../../components/ListPage";
 import { listProps } from "../../../lib/list";
 import { getPostsByTerm, getTerms } from "../../../lib/content";
+import { withCanonical } from "../../../lib/seo";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ tag: stri
   const { tag: rawTag } = await params;
   const tag = decodeURIComponent(rawTag);
   const term = getTerms("tags").find((t) => t.slug === tag);
-  return { title: term?.name ?? tag };
+  return withCanonical(`/tags/${tag}/`, { title: term?.name ?? tag });
 }
 
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {

@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { site } from "../lib/site";
 
 export const metadata: Metadata = {
+  // 相对 og:image / canonical 以此解析；缺省时 vinext 会落到 http://localhost:3000
+  metadataBase: new URL(site.baseUrl),
   title: {
     default: site.title,
     template: `%s – ${site.title}`,

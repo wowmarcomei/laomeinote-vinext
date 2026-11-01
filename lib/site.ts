@@ -41,3 +41,15 @@ export const site = {
 export function absoluteUrl(path: string): string {
   return `${site.baseUrl}${path}`;
 }
+
+// 与 vinext metadata 解析一致：trailing slash，非 ASCII 按 URL 百分号编码。
+// sitemap 的 <loc> 用它，才能和 alternates.canonical（经 metadataBase 解析）逐字相同。
+export function encodedAbsoluteUrl(path: string): string {
+  const base = new URL(site.baseUrl);
+  const prefix = base.pathname.replace(/\/$/, "");
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  const withSlash = normalized.endsWith("/") ? normalized : `${normalized}/`;
+  const url = new URL(`${prefix}${withSlash}`.replace(/\/{2,}/g, "/"), base.origin);
+  if (url.pathname === "/" && url.search === "" && url.hash === "") return `${url.origin}/`;
+  return url.href;
+}

@@ -1,2 +1,9 @@
 name = "laomeinote"
 compatibility_date = "2025-10-20"
+
+# 静态导出的 HTML 在 dist/client（由 Vite 插件填写 directory）。
+# not_found_handling = "404-page" 让未匹配路径返回根目录 404.html，状态码保持 404。
+# 默认 "none" 时资源层直接回 0 字节 404，app/not-found.tsx 的正文不会被送出。
+[assets]
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"
