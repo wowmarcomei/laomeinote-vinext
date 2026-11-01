@@ -4,8 +4,20 @@ import matter from "gray-matter";
 import { load as loadYaml } from "js-yaml";
 import { plainText, readingMinutes, renderMarkdown, stripHtml, tocToHtml, type TocItem } from "./markdown";
 
-// 与原站 Hugo 行为对齐：frontmatter 允许重复键（后者覆盖前者）
+// 与原站 Hugo 行为对齐：frontmatter 允许重复键（后者覆盖前者），支持 YAML(---) 与 TOML(+++)
 function parse(source: string) {
+  const trimmed = source.trimStart();
+  if (trimmed.startsWith("+++")) {
+    const end = trimmed.indexOf("\n+++", 3);
+    if (end !== -1) {
+      const data: Record<string, string> = {};
+      for (const line of trimmed.slice(3, end).split("\n")) {
+        const m = line.match(/^\s*([A-Za-z0-9_-]+)\s*=\s*(.+?)\s*$/);
+        if (m) data[m[1]] = m[2].replace(/^["']|["']$/g, "");
+      }
+      return { data, content: trimmed.slice(end + 4).replace(/^\r?\n/, "") };
+    }
+  }
   return matter(source, {
     engines: { yaml: (s) => loadYaml(s, { json: true }) as object },
   });
