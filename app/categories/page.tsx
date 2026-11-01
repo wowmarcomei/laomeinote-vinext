@@ -1,7 +1,8 @@
 import Shell from "../../components/Shell";
 import { getTerms, termSize } from "../../lib/content";
+import { withCanonical } from "../../lib/seo";
 
-export const metadata = { title: "Categories" };
+export const metadata = withCanonical("/categories/", { title: "Categories" });
 
 export default function CategoriesPage() {
   const terms = getTerms("categories");

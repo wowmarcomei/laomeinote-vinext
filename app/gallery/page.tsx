@@ -1,8 +1,9 @@
 import Shell from "../../components/Shell";
 import ListPage from "../../components/ListPage";
 import { getGalleries, getTerms } from "../../lib/content";
+import { withCanonical } from "../../lib/seo";
 
-export const metadata = { title: "Gallery" };
+export const metadata = withCanonical("/gallery/", { title: "Gallery" });
 
 export default function GalleryIndexPage() {
   const cards = getGalleries().map((g) => ({

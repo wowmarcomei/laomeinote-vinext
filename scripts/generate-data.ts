@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { getAllPosts, getTerms } from "../lib/content";
-import { absoluteUrl, site } from "../lib/site";
+import { absoluteUrl, encodedAbsoluteUrl, site } from "../lib/site";
 
 const out = path.join(process.cwd(), "public");
 
@@ -71,8 +71,13 @@ fs.writeFileSync(
   path.join(out, "sitemap.xml"),
   `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${absoluteUrl(u)}</loc></url>`).join("\n")}
+${urls.map((u) => `  <url><loc>${encodedAbsoluteUrl(u)}</loc></url>`).join("\n")}
 </urlset>`
 );
 
-console.log(`生成完成: index.json(${posts.length} 篇), index.xml, sitemap.xml(${urls.length} 个 URL)`);
+fs.writeFileSync(
+  path.join(out, "robots.txt"),
+  `User-agent: *\n\nSitemap: ${site.baseUrl}/sitemap.xml\n`
+);
+
+console.log(`生成完成: index.json(${posts.length} 篇), index.xml, sitemap.xml(${urls.length} 个 URL), robots.txt`);

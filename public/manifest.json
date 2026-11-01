@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "default_locale": "zh",
     "description": "老梅笔记",
-    "start_url": "https://laomeinote.com",
+    "start_url": "/",
     "icons": [
       {
         "src": "favicon/android-icon-36x36.png",

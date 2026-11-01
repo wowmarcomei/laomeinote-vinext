@@ -1,7 +1,8 @@
 import Shell from "../../components/Shell";
 import { getAbout } from "../../lib/content";
+import { withCanonical } from "../../lib/seo";
 
-export const metadata = { title: "关于" };
+export const metadata = withCanonical("/about/", { title: "关于" });
 
 export default function AboutPage() {
   const about = getAbout();

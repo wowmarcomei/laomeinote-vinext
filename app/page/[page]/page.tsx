@@ -2,10 +2,16 @@ import Shell from "../../../components/Shell";
 import ListPage from "../../../components/ListPage";
 import { listProps, totalPages } from "../../../lib/list";
 import { getAllPosts } from "../../../lib/content";
+import { withCanonical } from "../../../lib/seo";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
   return Array.from({ length: totalPages(getAllPosts()) - 1 }, (_, i) => ({ page: String(i + 2) }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ page: string }> }) {
+  const { page } = await params;
+  return withCanonical(`/page/${page}/`);
 }
 
 export default async function PaginatedHome({ params }: { params: Promise<{ page: string }> }) {
