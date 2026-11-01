@@ -31,12 +31,12 @@ export function Footer() {
         <p className="caption">©{new Date().getFullYear()}, All Rights Reserved</p>
         <p className="caption">
           Powered by{" "}
-          <a href="https://gohugo.io/" target="_blank" rel="noreferrer">
-            Hugo
+          <a href="https://github.com/cloudflare/vinext" target="_blank" rel="noreferrer">
+            vinext
           </a>{" "}
-          and the{" "}
-          <a href="https://github.com/zzossig/hugo-theme-zzo" target="_blank" rel="noreferrer">
-            Zzo theme
+          and{" "}
+          <a href="https://workers.cloudflare.com/" target="_blank" rel="noreferrer">
+            Cloudflare Workers
           </a>
         </p>
       </div>
