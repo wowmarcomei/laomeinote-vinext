@@ -73,6 +73,16 @@ Worker 名称见 `wrangler.toml`（默认 `laomeinote`）。
 BASE_URL="https://your-domain.com" npm run build
 ```
 
+## 自定义域名与 HTTPS
+
+线上域名：**https://blog.laomei.app**（默认 baseUrl，见 `lib/site.ts`）。
+
+绑定方式（已配置）：
+
+- Workers 路由：`blog.laomei.app/*` → Worker `laomeinote`（zone `laomei.app`）
+- DNS：`blog` CNAME → `laomeinote.imeixuhong.workers.dev`（开启橙色云代理）
+- 证书：Cloudflare Universal SSL 自动覆盖 `*.laomei.app`，**自动签发、自动续期**，无需手动管理
+
 ## 目录
 
 ```

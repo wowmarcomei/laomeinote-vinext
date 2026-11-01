@@ -5,7 +5,7 @@ export const site = {
   logoText: "Laomei Note | 老梅笔记",
   description:
     "LaomeiNote 老梅笔记是Laomei的个人站点，主要分享AI、Docker、Linux、Kubernetes、Devops、建站SEO技术, 最新科技、读书笔记等内容。",
-  baseUrl: (process.env.BASE_URL || "https://laomeinote.com").replace(/\/$/, ""),
+  baseUrl: (process.env.BASE_URL || "https://blog.laomei.app").replace(/\/$/, ""),
   author: "Laomei",
   paginate: 10,
   archivePaginate: 40,
